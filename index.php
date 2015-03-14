@@ -58,16 +58,17 @@
       	<!--RIGHT COLUMN-->
       	<div class="col-md-4 col-md-offset-1">
 
-      		<strong>username: </strong>
-      		<input type="text" id="userName"><br>
+       		<form class="form-horizontal">
+      			<div class="col-md-2 col-md-offset-1">
+      				<label class="control-label col-sm-3" for="userName">username: </label>
+		      		<input type="text" id="userName"><br>
 
-      		<strong>password: </strong>
-      		<input type="text" id="userPass"><br>
+		      		<strong>password: </strong>
+		      		<input type="text" id="userPass"><br>
 
-      		<button type="button" onclick="sendLoginInfo();" >Submit</button>
-
-      		<!-- "sendLoginInfo(document.getElementsByName('userName').value, document.getElementsByName('userPass').value);" -->
-
+		      		<button type="button" onclick="sendLoginInfo();" >Submit</button>
+		      	</div>
+      		</form>
 
       	</div>
 

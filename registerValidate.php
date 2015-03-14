@@ -18,7 +18,7 @@ if(!$mysqli || $mysqli->connect_errno)
 }
 
 // sql query for username
-if (!($stmt = $mysqli->prepare("SELECT userName, password FROM accounts WHERE userName = ?")))
+if (!($stmt = $mysqli->prepare("SELECT userName FROM accounts WHERE userName = ?")))
 {
 	echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 }
@@ -30,13 +30,12 @@ if (!$stmt->bind_param("s", $user))
 
 if (!$stmt->execute())
 {
-	echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	echo "1Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 }
 
 $outName = null;
-$outPass = null;
 
-if (!$stmt->bind_result($outName, $outPass)) 
+if (!$stmt->bind_result($outName)) 
 {
     echo "Binding output parameters failed: (" . $stmt->errno . ") " . $stmt->error;
 }
@@ -44,28 +43,46 @@ if (!$stmt->bind_result($outName, $outPass))
 $stmt->fetch();
 $stmt->close();
 
-//userName not found in db
-if($outName == null)
+//userName exists
+if($outName != null)
 {
 	echo 0;
 }
 
-//password doesn't match
-else if($outPass != $pass)
+//userName does not exist; create account
+else if($outName == null)
 {
-	echo 1;
-}
+	$mysqli = new mysqli("oniddb.cws.oregonstate.edu","leonardb-db","rYW5PXXTrTvbnJGI", "leonardb-db");
 
-//serName found and password match
-else if ($user == $outUser && $pass == $outPass)
-{
-	echo 2;
+		if(!$mysqli || $mysqli->connect_errno)
+		{
+			echo "Connection error" . $mysqli->connect_errno . " " . $mysqli->connect_error;
+		}
+
+		if (!($stmt = $mysqli->prepare("INSERT INTO accounts (userName, password, firstName, lastName) VALUES (?,?,?,?)")))
+		{
+			echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+		}
+
+		if (!$stmt->bind_param("ssss", $user, $pass, $first, $last))
+		{
+			echo "Binding parameters failed: (" . $stmt-errno . ") " . $stmt->error;
+		}
+
+		if (!$stmt->execute())
+		{
+			echo "2Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		}
+
+		$stmt->close();
+
+	echo 1;
 }
 
 //unknown error
 else
 {
-	echo 3;
+	echo 2;
 }
 
 ?>

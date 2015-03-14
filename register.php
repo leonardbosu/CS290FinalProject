@@ -47,54 +47,60 @@
       	<!--LEFT COLUMN-->
       	<div class="col-md-6 col-md-offset-1">
 
-      		<h1> Welcome to my site!</h1><br><br>
+      		<h2> Enter registration info below </h2><br><br>
 
-      		<div id="welcomeText">Please login to continue</div>
+      		<div id="welcomeText"></div>
 
-      		<div id="debug"></div>
+      		debug: <div id="debug"></div>
 
           <div id="regForm">
 
-          <h2> Enter registration info below </h2>
+          <form class="form-horizontal">
+            <div class="col-md-3 col-md-offset-1">
 
-          <strong>First Name: </strong>
-          <input type="text" id="userFirstNameReg">*<br>
+              <strong>First Name: </strong>
+              <input type="text" id="userFirstNameReg"><br>
 
-          <strong>Last Name: </strong>
-          <input type="text" id="userLastNameReg">*<br>
+              <strong>Last Name: </strong>
+              <input type="text" id="userLastNameReg"><br>
 
-          <strong>username: </strong>
-          <input type="text" id="userNameReg">*<br>
+              <strong>username: </strong>
+              <input type="text" id="userNameReg"><br>
 
-          <strong>password: </strong>
-          <input type="text" id="userPassReg">*<br>
+              <strong>password: </strong>
+              <input type="text" id="userPassReg"><br>
 
-          <button type="button" onclick="infoValidate();" >Submit</button>
+              <button type="button" onclick="infoValidate();" >Submit</button>
+
+            </div>
+          </form>
 
         </div>
 
       	</div>
 
       	<!--RIGHT COLUMN-->
-      	<div class="col-md-4 col-md-offset-1">
+      	
+        <div class="col-md-3 col-md-offset-2">
 
-      		<strong>username: </strong>
-      		<input type="text" id="userName"><br>
+          <form class="form-horizontal">
+            <div class="col-md-2 col-md-offset-1">
+              <strong>username: </strong>
+              <input type="text" id="userName"><br>
 
-      		<strong>password: </strong>
-      		<input type="text" id="userPass"><br>
+              <strong>password: </strong>
+              <input type="text" id="userPass"><br>
 
-      		<button type="button" onclick="sendLoginInfo();" >Submit</button>
+              <button type="button" onclick="sendLoginInfo();" >Submit</button>
+            </div>
+          </form>
 
-      		<!-- "sendLoginInfo(document.getElementsByName('userName').value, document.getElementsByName('userPass').value);" -->
-
-
-      	</div>
+        </div>
 
       </div>
 
 
-    <!-- leonardb login scripts -->
+    <!-- leonardb login/register scripts -->
 
     <script src="login.js"></script>     
 
