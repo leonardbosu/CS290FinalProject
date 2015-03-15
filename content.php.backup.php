@@ -1,31 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-//session handling
-
-session_start();
-
-if(session_status() == PHP_SESSION_ACTIVE)
-{
-  if (!isset($_SESSION['user']) && isset($_POST['user']))
-      {
-        $_SESSION['user'] = $_POST['user'];
-      }
-  else if (!isset($_SESSION['user']) && !isset($_POST['user']))
-  {
-    header('location:content.php?action=logout', true);
-  }
-}
-
-if(isset($_GET['action']) && $_GET['action'] == 'logout')
-{
-  $_SESSION = array();
-  session_destroy();
-  header('Location:index.php', true);
-  die();
-}
-
 //html headers
 echo 
 
@@ -81,43 +54,88 @@ echo
       </nav>'
 
       ?>
+<?php
+
+//open db connection
+$mysqli = new mysqli("oniddb.cws.oregonstate.edu","leonardb-db","rYW5PXXTrTvbnJGI", "leonardb-db");
+
+if(!$mysqli || $mysqli->connect_errno)
+{
+  echo "Connection error" . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+
+// sql query for username
+if (!($stmt = $mysqli->prepare("SELECT * FROM hikeReports WHERE username = ?")))
+{
+  echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+}
+
+$tempUser = 'bar';
+
+if (!$stmt->bind_param("s", $tempUser))
+{
+  echo "Binding parameters failed: (" . $stmt-errno . ") " . $stmt->error;
+}
+
+if (!$stmt->execute())
+{
+  echo "1Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+}
+
+$resultReportID = null;
+$resultUsername = null;
+$resultTrailName = null;
+$resultHikeDescription = null;
+$resultMakePublic = null;
+
+if (!$stmt->bind_result($resultReportID, $resultUsername, $resultTrailName, $resultHikeDescription, $resultMakePublic)) 
+{
+    echo "Binding output parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+}
+
+echo '<table border="1">
+    <tr><th> ReportID <th> username <th> trailName <th> hikeDescription <th> makePublic <th> Delete';
+
+while($stmt->fetch())
+{
+  
+  echo '<tr><td>' . $resultReportID . '<td>' . $resultUsername . '<td>'
+  . $resultTrailName . '<td>' . $resultHikeDescription . '<td>' . $resultMakePublic;
+}
+
+echo '</table>';
+$stmt->close();
+
+?>
+
 
 <?php 
-  echo 
-  ' <div class="row">
-  	<!--LEFT COLUMN-->
-  	<div class="col-md-6 col-md-offset-1">
+echo 
+      ' <div class="row">
+      	<!--LEFT COLUMN-->
+      	<div class="col-md-6 col-md-offset-1">
 
-  		<h1> Trail Reports</h1><br><br>
-      <button id="showReports" onclick="getPublic();"> Show Latest Public Reports</button><br>
+      		<h1> Here is your content</h1><br><br>
 
-  		<div id="welcomeText">Choose an Option!</div><br>
+      		<div id="welcomeText">Please login to continue</div><br>
 
-      <div id="resultTable"></div>
+      		debug: <div id="debug"></div>
 
-  		debug: <div id="debug"></div>
-
-
-  	</div>
-
-  	<!--RIGHT COLUMN-->
-  	<div class="col-md-4 col-md-offset-1">';
-
-      		
-  if (isset($_SESSION['user']))
-  {
-    echo "<h3> Welcome " . $_SESSION['user'] . "!</h3>";
-  }
-  else
-  {
-    echo "<h3>You are not logged in!</h3>";
-  }
-
-  echo 
-    '<button id="logout" onclick="logout();" > logout </button>
       	</div>
-      </div>';
-?>
+
+      	<!--RIGHT COLUMN-->
+      	<div class="col-md-4 col-md-offset-1">
+
+      		Welcome user!
+
+      		<button id="logout" onclick="logout();" > logout </button>
+
+
+      	</div>
+
+      </div>'
+
+      ?>
 
 
 <?php 
@@ -125,8 +143,7 @@ echo
 echo 
    '<!-- leonardb login scripts -->
 
-    <script src="login.js"></script>   
-    <script src="dbInterface.js"></script>  
+    <script src="login.js"></script>     
 
     <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

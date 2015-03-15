@@ -28,9 +28,29 @@ function sendLoginInfo()
 
 				else if ( xhrResponse == 2)
 				{
-					var urlContent = "content.php";
+					/*var urlContent = "content.php";
 					var urlPostContent = "?user=" + userName;
 					window.location.replace(urlContent + urlPostContent);
+					*/
+
+					//from stackechange.com/19064352
+					var redirect = function(url)
+					{
+						var form = document.createElement('form');
+						form.method = 'POST';
+						form.action = url;
+
+						var input = document.createElement('input');
+						input.name = 'user';
+						input.value = userName; 
+
+						form.appendChild(input);
+						document.body.appendChild(form);
+
+						form.submit();
+					}
+
+					redirect('content.php');
 				}
 
 				else if ( xhrResponse == 3)
@@ -122,4 +142,11 @@ function infoValidate()
 		sendRegInfo(userFirstNameReg, userLastNameReg, userNameReg, userPassReg);
 	}
 
+}
+
+
+
+function logout()
+{
+	window.location = 'content.php?action=logout';
 }
