@@ -1,4 +1,5 @@
 <?php
+//html headers
 echo 
 
 '<!DOCTYPE html>
@@ -21,6 +22,7 @@ echo
 ?>
 
 <?php
+//navbar html
 echo 
   '<body>
 
@@ -52,9 +54,63 @@ echo
       </nav>'
 
       ?>
+<?php
 
-      <?php 
-      echo 
+//open db connection
+$mysqli = new mysqli("oniddb.cws.oregonstate.edu","leonardb-db","rYW5PXXTrTvbnJGI", "leonardb-db");
+
+if(!$mysqli || $mysqli->connect_errno)
+{
+  echo "Connection error" . $mysqli->connect_errno . " " . $mysqli->connect_error;
+}
+
+// sql query for username
+if (!($stmt = $mysqli->prepare("SELECT * FROM hikeReports WHERE username = ?")))
+{
+  echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+}
+
+$tempUser = 'bar';
+
+if (!$stmt->bind_param("s", $tempUser))
+{
+  echo "Binding parameters failed: (" . $stmt-errno . ") " . $stmt->error;
+}
+
+if (!$stmt->execute())
+{
+  echo "1Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+}
+
+$resultReportID = null;
+$resultUsername = null;
+$resultTrailName = null;
+$resultHikeDescription = null;
+$resultMakePublic = null;
+
+if (!$stmt->bind_result($resultReportID, $resultUsername, $resultTrailName, $resultHikeDescription, $resultMakePublic)) 
+{
+    echo "Binding output parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+}
+
+echo '<table border="1">
+    <tr><th> ReportID <th> username <th> trailName <th> hikeDescription <th> makePublic <th> Delete';
+
+while($stmt->fetch())
+{
+  
+  echo '<tr><td>' . $resultReportID . '<td>' . $resultUsername . '<td>'
+  . $resultTrailName . '<td>' . $resultHikeDescription . '<td>' . $resultMakePublic;
+}
+
+echo '</table>';
+$stmt->close();
+
+?>
+
+
+<?php 
+echo 
       ' <div class="row">
       	<!--LEFT COLUMN-->
       	<div class="col-md-6 col-md-offset-1">
@@ -83,6 +139,7 @@ echo
 
 
 <?php 
+//javascript links and page closing tags
 echo 
    '<!-- leonardb login scripts -->
 
