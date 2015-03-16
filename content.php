@@ -96,7 +96,8 @@ echo
           <button type="button" class="btn btn-default" id="addReport" onclick="addReport();">Add Report</button>
       </div><br>
 
-  		<div id="welcomeText">Choose an Option!</div><br>
+      <div id="padding">  </div><br>
+  		<h3><div id="welcomeText">Choose an Option!</div></h3><br>
 
       <div id="resultTable"></div>
 
@@ -111,7 +112,7 @@ echo
       		
   if (isset($_SESSION['user']))
   {
-    echo '<h3> Welcome <div id="myuser">' . $_SESSION['user'] . "</div>!</h3>";
+    echo '<h4> Welcome <div id="myuser">' . $_SESSION['user'] . "</div>!</h4>";
   }
   else
   {

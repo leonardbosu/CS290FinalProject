@@ -1,5 +1,7 @@
 function getPublic()
 {
+	document.getElementById('resultTable').innerHTML = "";
+
 	xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function()
 		{
@@ -16,8 +18,8 @@ function getPublic()
 
 				else
 				{
-					document.getElementsById('welcomeText').innerHTML = "Here are the latest Reports!";
-					displayData(xhrResponse);
+					document.getElementById('welcomeText').innerHTML = "Here are the latest Reports!";
+					displayData(xhrResponse, "public");
 				}
 			}
 		}
@@ -32,13 +34,14 @@ function getPublic()
 function getPrivate()
 {
 	var tempuse = document.getElementById('myuser').innerHTML;
+	document.getElementById('resultTable').innerHTML = "";
+
 	xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function()
 		{
 			if(xhr.readyState == 4 && xhr.status == 200)
 			{
 				var xhrResponse = JSON.parse(xhr.responseText);
-				//var xhrResponse = xhr.responseText;
 
 				document.getElementById("debug").innerHTML = xhrResponse;
 
@@ -49,8 +52,8 @@ function getPrivate()
 
 				else
 				{
-					document.getElementsById('welcomeText').innerHTML = "Here are your Reports!";
-					displayData(xhrResponse);
+					document.getElementById('welcomeText').innerHTML = "Here are your Reports!";
+					displayData(xhrResponse, "private");
 				}
 			}
 		}
@@ -66,6 +69,7 @@ function getPrivate()
 function addReport()
 {
 	document.getElementById('resultTable').innerHTML = "";
+	document.getElementById('welcomeText').innerHTML = "Report on your latest Hike!";
 
 		var form = document.createElement('form');
 		form.className = "form-horizontal"
@@ -155,7 +159,7 @@ function addReport()
 
 }
 
-function displayData(response)
+function displayData(response, type)
 {
 	document.getElementById('resultTable').innerHTML = "";
 
@@ -213,6 +217,22 @@ function displayData(response)
 			row.appendChild(data);
 			data.innerHTML = response[i].hikeDescription;
 
+			//create delete button for private records
+
+			if(type == 'private')
+			{
+				var delButton = document.createElement('button');
+				delButton.className = "btn btn-default";
+				delButton.innerHTML = "DELETE";
+				var rec = response[i].reportID;
+				delButton.onclick = function()
+				{
+					delRecord(rec);
+				};
+				newTable.appendChild(delButton);
+			}
+
+
 			//create table seperators
 			var lineBreak1 = document.createElement('br');
 			var rule = document.createElement('hr');
@@ -233,7 +253,7 @@ function addRecord()
 	var shareReport = document.getElementById('shareReport').checked;
 	var tempuse = document.getElementById('myuser').innerHTML;
 
-
+	
 	xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function()
 		{
@@ -248,15 +268,53 @@ function addRecord()
 					document.getElementById('welcomeText').innerHTML = "Error with Record Add" + xhrResponse;
 				}
 
-				else
+				else if( xhrResponse ==1)
 				{
 					document.getElementById('welcomeText').innerHTML = "New report Added!";
+				}
+				else 
+				{
+					document.getElementById('welcomeText').innerHTML = "Error with Record Add: " + xhrResponse;
 				}
 			}
 		}
 
 	var url = "dbInterface.php"; 
 	var urlPost = "query=add&user=" + tempuse + "&trailName=" + trailName + "&trailDescription=" + trailDescription + "&shareReport=" + shareReport;
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhr.send(urlPost);
+}
+
+function delRecord(id)
+{
+	var reportID = id;
+
+
+	xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function()
+		{
+			if(xhr.readyState == 4 && xhr.status == 200)
+			{
+				var xhrResponse = xhr.responseText;
+
+				document.getElementById("debug").innerHTML = xhrResponse;
+
+				if ( xhrResponse == 0) //mySQL query returned no results
+				{
+					document.getElementById('welcomeText').innerHTML = "Error with Record Delete" + xhrResponse;
+				}
+
+				else
+				{
+					document.getElementById('welcomeText').innerHTML = "Report Deleted!";
+					getPrivate();
+				}
+			}
+		}
+
+	var url = "dbInterface.php"; 
+	var urlPost = "query=del&reportID=" + reportID;
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhr.send(urlPost);

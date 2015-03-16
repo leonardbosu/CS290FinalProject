@@ -162,11 +162,49 @@ else if( $query == 'add' )
 		}
 
 		$stmt->close();
+		echo 1;
 	}
 	else
 	{
 		echo 0;
 	}
 }
+
+else if( $query == 'del' )
+{
+	if (isset($_POST['reportID']))
+	{
+		if(!$mysqli || $mysqli->connect_errno)
+		{
+		  echo "Connection error" . $mysqli->connect_errno . " " . $mysqli->connect_error;
+		}
+
+		// sql query for recent
+		if (!($stmt = $mysqli->prepare("DELETE FROM hikeReports WHERE reportID = ?")))
+		{
+		  echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+		}
+
+		$tempQuery = $_POST['reportID'];
+
+		if (!$stmt->bind_param("s", $tempQuery))
+		{
+		  echo "Binding parameters failed: (" . $stmt-errno . ") " . $stmt->error;
+		}
+
+		if (!$stmt->execute())
+		{
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		}
+
+		$stmt->close();
+		echo 1;
+	}
+	else
+	{
+		echo 'Error: user not defined.';
+	}
+}
+
 
 ?>
