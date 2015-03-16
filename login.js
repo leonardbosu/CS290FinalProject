@@ -138,6 +138,7 @@ function regInfoValidate()
 
 	var readyToReg = true;
 
+	//borroed from http://www.9lessons.info/2009/03/perfect-javascript-form-validation.html
 	var ck_username = /^[A-Za-z0-9_]{1,20}$/;
 	var ck_password =  /^[A-Za-z0-9!@#$%^&*()_]{6,20}$/;
 
