@@ -32,7 +32,7 @@ if( $query == 'public' )
 
 	if (!$stmt->execute())
 	{
-	  echo "1Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 	}
 
 	$resultReportID = null;
@@ -63,7 +63,7 @@ if( $query == 'public' )
 
 }
 
-else if( $query == 'user' )
+else if( $query == 'private' )
 {
 	if (isset($_POST['user']))
 	{
@@ -73,7 +73,7 @@ else if( $query == 'user' )
 		}
 
 		// sql query for recent
-		if (!($stmt = $mysqli->prepare("SELECT * FROM hikeReports WHERE user = ?")))
+		if (!($stmt = $mysqli->prepare("SELECT * FROM hikeReports WHERE username = ?")))
 		{
 		  echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 		}
@@ -87,7 +87,7 @@ else if( $query == 'user' )
 
 		if (!$stmt->execute())
 		{
-		  echo "1Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 		}
 
 		$resultReportID = null;
@@ -119,6 +119,53 @@ else if( $query == 'user' )
 	else
 	{
 		echo 'Error: user not defined.';
+	}
+}
+
+else if( $query == 'add' )
+{
+	if (isset($_POST['user']) && isset($_POST['trailName']) && isset($_POST['trailDescription']) && isset($_POST['shareReport']))
+	{
+		if(!$mysqli || $mysqli->connect_errno)
+		{
+		  echo "Connection error" . $mysqli->connect_errno . " " . $mysqli->connect_error;
+		}
+
+		// sql query for recent
+		if (!($stmt = $mysqli->prepare("INSERT INTO hikeReports (username, trailName, hikeDescription, makePublic) VALUES (?,?,?,?)")))
+		{
+		  echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+		}
+
+		$tempQuery = $_POST['user'];
+		$tempTrailName = $_POST['trailName'];
+		$tempHikeDescription = $_POST['trailDescription'];
+		$tempShare = $_POST['shareReport'];
+
+		if ($tempShare == 'true')
+		{
+			$tempShare = 1;
+		}
+		else 
+		{
+			$tempShare = 0;
+		}
+
+		if (!$stmt->bind_param("sssi", $tempQuery, $tempTrailName, $tempHikeDescription, $tempShare))
+		{
+		  echo "Binding parameters failed: (" . $stmt-errno . ") " . $stmt->error;
+		}
+
+		if (!$stmt->execute())
+		{
+		  echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		}
+
+		$stmt->close();
+	}
+	else
+	{
+		echo 0;
 	}
 }
 

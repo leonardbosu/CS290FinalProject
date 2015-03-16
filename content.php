@@ -88,8 +88,13 @@ echo
   	<!--LEFT COLUMN-->
   	<div class="col-md-6 col-md-offset-1">
 
-  		<h1> Trail Reports</h1><br><br>
-      <button id="showReports" onclick="getPublic();"> Show Latest Public Reports</button><br>
+  		<h1> Trail Reports</h1><br>
+
+      <div class="btn-group" role="group" aria-label="...">
+          <button type="button" class="btn btn-default" id="showReports1" onclick="getPublic();">Show Public Reports</button>
+          <button type="button" class="btn btn-default" id="showReports2" onclick="getPrivate();">Show Personal Reports</button>
+          <button type="button" class="btn btn-default" id="addReport" onclick="addReport();">Add Report</button>
+      </div><br>
 
   		<div id="welcomeText">Choose an Option!</div><br>
 
@@ -106,7 +111,7 @@ echo
       		
   if (isset($_SESSION['user']))
   {
-    echo "<h3> Welcome " . $_SESSION['user'] . "!</h3>";
+    echo '<h3> Welcome <div id="myuser">' . $_SESSION['user'] . "</div>!</h3>";
   }
   else
   {
@@ -127,7 +132,7 @@ echo
 
     <script src="login.js"></script>   
     <script src="dbInterface.js"></script>  
-
+   
     <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
