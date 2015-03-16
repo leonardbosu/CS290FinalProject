@@ -299,8 +299,6 @@ function addRecord()
 	var tempuse = document.getElementById('myuser').innerHTML;
 	//var date = document.getElementById('date').value;
 	//var picture = document.getElementById('picture').value;
-
-	console.log(date);
 	
 	xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function()
