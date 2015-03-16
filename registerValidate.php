@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 //capture form data
 $user = $_POST['user'];
@@ -23,7 +25,7 @@ if (!($stmt = $mysqli->prepare("SELECT userName FROM accounts WHERE userName = ?
 	echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 }
 
-if (!$stmt->bind_param("s", 'bar'))
+if (!$stmt->bind_param("s", $user))
 {
 	echo "Binding parameters failed: (" . $stmt-errno . ") " . $stmt->error;
 }

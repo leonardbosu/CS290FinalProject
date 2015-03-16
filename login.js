@@ -1,8 +1,8 @@
 //ajax request; sends login info via POST; receives validation code 0-3
-function sendLoginInfo()
+function sendLoginInfo(user, pass)
 {
-	var userName = encodeURIComponent(document.getElementById('userName').value);
-	var userPass = encodeURIComponent(document.getElementById('userPass').value);
+	var userName = user;
+	var userPass = pass;
 
 	xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function()
@@ -63,7 +63,7 @@ function sendLoginInfo()
 					document.getElementById('welcomeText').innerHTML = "An error has occured: " + xhrResponse;
 				}
 
-				document.getElementById("debug").innerHTML = userName + xhrResponse;
+				//document.getElementById("debug").innerHTML = userName + xhrResponse;
 			}
 		}
 
@@ -89,7 +89,7 @@ function sendRegInfo(first, last, user, pass)
 			{
 				var xhrResponse =  xhr.responseText;
 
-				document.getElementById("debug").innerHTML = xhrResponse;
+				//document.getElementById("debug").innerHTML = xhrResponse;
 
 				if ( xhrResponse == 0) //userName already exists
 				{
@@ -106,6 +106,8 @@ function sendRegInfo(first, last, user, pass)
 					document.getElementById('welcomeText').innerHTML = "Your account has been successfully created! Click ";
 					document.getElementById('welcomeText').appendChild(a);
 					document.getElementById('welcomeText').innerHTML += " to continue.";
+
+
 				}
 
 				else if ( xhrResponse == 2)
@@ -127,7 +129,7 @@ function sendRegInfo(first, last, user, pass)
 	xhr.send(urlPost);
 }
 
-function infoValidate()
+function regInfoValidate()
 {
 	var userFirstNameReg = encodeURIComponent(document.getElementById('userFirstNameReg').value);
 	var userLastNameReg = encodeURIComponent(document.getElementById('userLastNameReg').value);
@@ -136,14 +138,54 @@ function infoValidate()
 
 	var readyToReg = true;
 
+	var ck_username = /^[A-Za-z0-9_]{1,20}$/;
+	var ck_password =  /^[A-Za-z0-9!@#$%^&*()_]{6,20}$/;
+
+	if (userFirstNameReg == "" || userLastNameReg == "" || userNameReg == "" || userPassReg == "")
+	{
+		document.getElementById('welcomeText').innerHTML = "All fields are required, please enter missing fields to continue";
+		readyToReg = false;
+	}
+
+	if (!ck_username.test(userNameReg)) 
+	{
+	  document.getElementById('welcomeText').innerHTML =  "You valid UserName no special char .";
+	  readyToReg = false;
+	}
+	
+	if (!ck_password.test(userPassReg)) 
+	{
+	  document.getElementById('welcomeText').innerHTML =  "You must enter a valid Password ";
+	  readyToReg = false;
+	}
+	
 	if (readyToReg == true)
 	{
-		document.getElementById('debug').innerHTML += "regValidated";
 		sendRegInfo(userFirstNameReg, userLastNameReg, userNameReg, userPassReg);
 	}
 
 }
 
+function loginInfoValidate()
+{
+	var userName = encodeURIComponent(document.getElementById('userName').value);
+	var userPass = encodeURIComponent(document.getElementById('userPass').value);
+
+	var readyToLogin = true;
+
+	if (userName == "" || userPass == "")
+	{
+		document.getElementById('welcomeText').innerHTML = "Please enter a valid username and password!";
+		readyToLogin = false;
+	}
+
+	if (readyToLogin == true)
+	{
+		sendLoginInfo(userName, userPass);
+	}
+
+
+}
 
 
 function logout()

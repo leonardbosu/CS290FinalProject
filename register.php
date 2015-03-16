@@ -16,7 +16,7 @@
     </head>
   <body>
 
-     <nav class="navbar navbar-default">
+     <nav class="navbar navbar-inverse">
             <div class="container-fluid">
               <!-- Brand and toggle get grouped for better mobile display -->
               <div class="navbar-header">
@@ -26,19 +26,13 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Final Project by Barry Leonard</a>
+                <a class="navbar-brand" href="content.php">TrailLogger - Final Project by Barry Leonard</a>
               </div>
 
               <!-- Collect the nav links, forms, and other content for toggling -->
               <div class="collapse navbar-inverted navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                   <li class="dropdown">
-                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Go To<span class="caret"></span></a>
-                   <ul class="dropdown-menu" role="menu">
-                       <li><a href="index.html">Intro</a></li>
-                    </ul>
-                  </li>
-                </ul>
+                  </ul>
               </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
       </nav>
@@ -49,9 +43,13 @@
 
       		<h2> Enter registration info below </h2><br><br>
 
-      		<div id="welcomeText"></div>
+          <h4> <p> All fields are required.
+            <p> Usernames can contain letters, numbers, and underscores only. 3-20 characters only.
+              <p> Passwords can contain specials characters. 6-20 characters only. 
 
-      		debug: <div id="debug"></div>
+      		<h3><div id="welcomeText"></div></h3>
+
+      		<!--debug: <div id="debug"></div>-->
 
           <div id="regForm">
 
@@ -68,9 +66,9 @@
               <input type="text" id="userNameReg"><br>
 
               <strong>password: </strong>
-              <input type="text" id="userPassReg"><br>
+              <input type="password" id="userPassReg"><br>
 
-              <button type="button" onclick="infoValidate();" >Submit</button>
+              <button type="button" onclick="regInfoValidate();" >Submit</button>
 
             </div>
           </form>
@@ -81,18 +79,21 @@
 
       	<!--RIGHT COLUMN-->
       	
-        <div class="col-md-3 col-md-offset-2">
+          <div class="col-md-3 col-md-offset-1">
 
-          <form class="form-horizontal">
-            <div class="col-md-2 col-md-offset-1">
-              <strong>username: </strong>
-              <input type="text" id="userName"><br>
-
-              <strong>password: </strong>
-              <input type="text" id="userPass"><br>
-
-              <button type="button" onclick="sendLoginInfo();" >Submit</button>
+          <form role="form">
+            <div class="form-group">
+              <label for="userName">UserName:</label>
+              <input type="text" class="form-control" id="userName" placeholder="Enter username">
             </div>
+
+            <div class="form-group">
+              <label for="userPass">Password:</label>
+              <input type="password" class="form-control" id="userPass" placeholder="Enter password">
+            </div>
+
+            <button type="button" class="btn btn-default" onclick="loginInfoValidate();" >Submit</button>
+            
           </form>
 
         </div>

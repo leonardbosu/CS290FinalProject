@@ -9,7 +9,7 @@ function getPublic()
 			{
 				var xhrResponse =  JSON.parse(xhr.responseText);
 
-				document.getElementById("debug").innerHTML = xhrResponse;
+				//document.getElementById("debug").innerHTML = xhrResponse;
 
 				if ( xhrResponse == 0) //mySQL query returned no results
 				{
@@ -43,7 +43,7 @@ function getPrivate()
 			{
 				var xhrResponse = JSON.parse(xhr.responseText);
 
-				document.getElementById("debug").innerHTML = xhrResponse;
+				//document.getElementById("debug").innerHTML = xhrResponse;
 
 				if ( xhrResponse == 0) //mySQL query returned no results
 				{
@@ -116,6 +116,28 @@ function addReport()
 					input2.className = "form-control";
 					inputFormat2.appendChild(input2);
 
+		/*var form6 = document.createElement('form');
+		form6.className = "form-horizontal"
+		document.getElementById('resultTable').appendChild(form6);
+
+			var formGroup6 = document.createElement('div');
+			formGroup6.className = "form-group";
+			form6.appendChild(formGroup6);
+
+				var label6 = document.createElement('label');
+				label6.className = "control-label col-sm-2";
+				label6.innerHTML = "Date: ";
+				formGroup6.appendChild(label6);
+
+				var inputFormat6 = document.createElement('div');
+				inputFormat6.className = "col-sm-2";
+				formGroup6.appendChild(inputFormat6);
+
+					var input6 = document.createElement('input');
+					input6.id = 'date';
+					input6.type = "date";
+					inputFormat6.appendChild(input6);*/
+
 		var form3 = document.createElement('form');
 		form3.className = "form-horizontal"
 		document.getElementById('resultTable').appendChild(form3);
@@ -137,6 +159,29 @@ function addReport()
 					input3.id = 'shareReport';
 					input3.type = "checkbox";
 					inputFormat3.appendChild(input3);
+
+		/*var form5 = document.createElement('form');
+		form5.className = "form-horizontal"
+		document.getElementById('resultTable').appendChild(form5);
+
+			var formGroup5 = document.createElement('div');
+			formGroup5.className = "form-group";
+			form5.appendChild(formGroup5);
+
+				var label5 = document.createElement('label');
+				label5.className = "control-label col-sm-2";
+				label5.innerHTML = "Attach Picture: ";
+				formGroup5.appendChild(label5);
+
+				var inputFormat5 = document.createElement('div');
+				inputFormat5.className = "col-sm-2";
+				formGroup5.appendChild(inputFormat5);
+
+					var input5 = document.createElement('input');
+					input5.id = 'picture';
+					input5.type = "file";
+					input5.accept = "image/*";
+					inputFormat5.appendChild(input5);*/
 		
 		var form4 = document.createElement('form');
 		form4.className = "form-horizontal"
@@ -252,7 +297,10 @@ function addRecord()
 	var trailDescription = document.getElementById('trailDescription').value;
 	var shareReport = document.getElementById('shareReport').checked;
 	var tempuse = document.getElementById('myuser').innerHTML;
+	//var date = document.getElementById('date').value;
+	//var picture = document.getElementById('picture').value;
 
+	console.log(date);
 	
 	xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function()
@@ -261,7 +309,7 @@ function addRecord()
 			{
 				var xhrResponse = xhr.responseText;
 
-				document.getElementById("debug").innerHTML = xhrResponse;
+				//document.getElementById("debug").innerHTML = xhrResponse;
 
 				if ( xhrResponse == 0) //mySQL query returned no results
 				{
@@ -298,7 +346,7 @@ function delRecord(id)
 			{
 				var xhrResponse = xhr.responseText;
 
-				document.getElementById("debug").innerHTML = xhrResponse;
+				//document.getElementById("debug").innerHTML = xhrResponse;
 
 				if ( xhrResponse == 0) //mySQL query returned no results
 				{

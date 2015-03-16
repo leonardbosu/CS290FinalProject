@@ -16,7 +16,7 @@
     </head>
   <body>
 
-     <nav class="navbar navbar-default">
+     <nav class="navbar navbar-inverse">
             <div class="container-fluid">
               <!-- Brand and toggle get grouped for better mobile display -->
               <div class="navbar-header">
@@ -26,18 +26,13 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Final Project by Barry Leonard</a>
+                <a class="navbar-brand" href="content.php">TrailLogger - Final Project by Barry Leonard</a>
               </div>
 
               <!-- Collect the nav links, forms, and other content for toggling -->
               <div class="collapse navbar-inverted navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                   <li class="dropdown">
-                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Go To<span class="caret"></span></a>
-                   <ul class="dropdown-menu" role="menu">
-                       <li><a href="index.html">Intro</a></li>
-                    </ul>
-                  </li>
+                   
                 </ul>
               </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -47,28 +42,36 @@
       	<!--LEFT COLUMN-->
       	<div class="col-md-6 col-md-offset-1">
 
-      		<h1> Welcome to my site!</h1><br><br>
+      		<h1> Welcome to TrailLogger</h1><br><br>
 
-      		<div id="welcomeText">Please login to continue</div><br>
+          <p><h5> This site will allow you to log information about the hikes that you have been on! </h5>
+          <p><h5> You will also be able to view other people's logs! </h5><br>
 
-      		debug: <div id="debug"></div>
+      		<h3><div id="welcomeText">Please login to continue</div><h3><br>
+
+
+
+      		<!--debug: <div id="debug"></div>-->
 
       	</div>
 
       	<!--RIGHT COLUMN-->
-      	<div class="col-md-4 col-md-offset-1">
+      	<div class="col-md-3 col-md-offset-1">
 
-       		<form class="form-horizontal">
-      			<div class="col-md-2 col-md-offset-1">
-      				<label class="control-label col-sm-3" for="userName">username: </label>
-		      		<input type="text" id="userName"><br>
+          <form role="form">
+            <div class="form-group">
+              <label for="userName">UserName:</label>
+              <input type="text" class="form-control" id="userName" placeholder="Enter username" >
+            </div>
 
-		      		<strong>password: </strong>
-		      		<input type="text" id="userPass"><br>
+            <div class="form-group">
+              <label for="userPass">Password:</label>
+              <input type="password" class="form-control" id="userPass" placeholder="Enter password" >
+            </div>
 
-		      		<button type="button" onclick="sendLoginInfo();" >Submit</button>
-		      	</div>
-      		</form>
+            <button type="button" class="btn btn-default" onclick="loginInfoValidate();" >Submit</button>
+            
+          </form>
 
       	</div>
 

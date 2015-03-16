@@ -53,7 +53,7 @@ echo
 echo 
   '<body>
 
-     <nav class="navbar navbar-default">
+     <nav class="navbar navbar-inverse">
             <div class="container-fluid">
               <!-- Brand and toggle get grouped for better mobile display -->
               <div class="navbar-header">
@@ -63,18 +63,13 @@ echo
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Final Project by Barry Leonard</a>
+                <a class="navbar-brand" href="content.php">TrailLogger - Final Project by Barry Leonard</a>
               </div>
 
               <!-- Collect the nav links, forms, and other content for toggling -->
               <div class="collapse navbar-inverted navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                   <li class="dropdown">
-                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Go To<span class="caret"></span></a>
-                   <ul class="dropdown-menu" role="menu">
-                       <li><a href="index.html">Intro</a></li>
-                    </ul>
-                  </li>
+                   
                 </ul>
               </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -101,18 +96,18 @@ echo
 
       <div id="resultTable"></div>
 
-  		debug: <div id="debug"></div>
+  		<!--debug: <div id="debug"></div>-->
 
 
   	</div>
 
   	<!--RIGHT COLUMN-->
-  	<div class="col-md-4 col-md-offset-1">';
+  	<div class="col-md-3 col-md-offset-1">';
 
       		
   if (isset($_SESSION['user']))
   {
-    echo '<h4> Welcome <div id="myuser">' . $_SESSION['user'] . "</div>!</h4>";
+    echo '<h3> Welcome <div id="myuser">' . $_SESSION['user'] . "</div></h3>";
   }
   else
   {
@@ -120,7 +115,7 @@ echo
   }
 
   echo 
-    '<button id="logout" onclick="logout();" > logout </button>
+    '<button class="btn btn-default" id="logout" onclick="logout();" > logout </button>
       	</div>
       </div>';
 ?>
